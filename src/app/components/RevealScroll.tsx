@@ -33,17 +33,17 @@ export const ImageRevealScroll = () => {
     return unsubscribe;
   }, [cycleProgress, currentIndex]);
 
-  const getImageScale = (index: number) =>
-    index === currentIndex
-      ? 1 - 0.25 * (scrollProgress - Math.floor(scrollProgress))
-      : index < currentIndex
-      ? 0.75
-      : 1.25;
+  const getImageScale = (index: number) => {
+    const progress = scrollProgress - Math.floor(scrollProgress);
+    if (index === currentIndex) return 1 - 0.25 * progress;
+    return index < currentIndex ? 0.75 : 1.25;
+  };
 
   const getImageStyle = (index: number) => {
     const progress = scrollProgress - Math.floor(scrollProgress);
+
     if (index === currentIndex) {
-      const clipProgress = Math.min(progress * 2, 1);
+      const clipProgress = Math.min(progress * 2, 1); // exakt wie Original
       const clipPath = `polygon(0% ${100 - clipProgress * 100}%, 100% ${
         100 - clipProgress * 100
       }%, 100% 100%, 0% 100%)`;
@@ -51,6 +51,7 @@ export const ImageRevealScroll = () => {
       const contrast = 1 + (1 - clipProgress) * 1.5;
       return { opacity: 1, clipPath, filter: `brightness(${brightness}) contrast(${contrast})` };
     }
+
     if (index < currentIndex) {
       const shouldHide = progress > 0.5;
       return {
@@ -59,6 +60,7 @@ export const ImageRevealScroll = () => {
         filter: "brightness(1) contrast(1)",
       };
     }
+
     return {
       opacity: 0,
       clipPath: "polygon(0% 100%,100% 100%,100% 100%,0% 100%)",
@@ -97,7 +99,7 @@ export const ImageRevealScroll = () => {
               alt={item.title}
               fill
               style={{ objectFit: "cover" }}
-              priority={index === 0} // erstes Bild schnell laden
+              priority={index === 0}
             />
           </motion.div>
         ))}

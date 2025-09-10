@@ -10,7 +10,7 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
     lenisRef.current = new Lenis({
       duration: 1.2,
       easing: (t) => t,
-      lerp: 0.1, // ersetzt smooth
+      lerp: 0.1, // sanftes Scrollen
     });
 
     const raf = (time: number) => {
@@ -20,9 +20,7 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
 
     requestAnimationFrame(raf);
 
-    return () => {
-      lenisRef.current?.destroy();
-    };
+    return () => lenisRef.current?.destroy();
   }, []);
 
   return <>{children}</>;
