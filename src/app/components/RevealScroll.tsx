@@ -2,13 +2,14 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const data = [
-  { title: "Digital Architecture", image: "/images/x.com/2334.jpg" },
-  { title: "Horizon Beyond", image: "/images/x.com/2334.jpg" },
-  { title: "Sound Wave Circuit", image: "/images/x.com/2334.jpg" },
-  { title: "Light Writer", image: "/images/x.com/2334.jpg" },
-  { title: "Star Explorer", image: "/images/x.com/2334.jpg" },
+  { title: "Digital Architecture", image: "/images/x.com/20.jpeg" },
+  { title: "Horizon Beyond", image: "/images/x.com/21.jpeg" },
+  { title: "Sound Wave Circuit", image: "/images/x.com/31.png" },
+  { title: "Light Writer", image: "/images/x.com/13.jpeg" },
+  { title: "Star Explorer", image: "/images/lummi/img8.png" },
 ];
 
 export const ImageRevealScroll = () => {
@@ -26,12 +27,9 @@ export const ImageRevealScroll = () => {
   useEffect(() => {
     const unsubscribe = cycleProgress.on("change", (value) => {
       const cycle = Math.floor(value);
-      if (cycle !== currentIndex && cycle < data.length) {
-        setCurrentIndex(cycle);
-      }
+      if (cycle !== currentIndex && cycle < data.length) setCurrentIndex(cycle);
       setScrollProgress(value);
     });
-
     return unsubscribe;
   }, [cycleProgress, currentIndex]);
 
@@ -77,6 +75,7 @@ export const ImageRevealScroll = () => {
   return (
     <div ref={containerRef} className="h-[1000vh] w-full">
       <section className="sticky top-0 h-screen w-full bg-[#121212]">
+        {/* Progress Bar */}
         <div className="h-30 absolute right-4 top-1/2 w-0.5 -translate-x-1/2 -translate-y-1/2 transform bg-[rgb(40,40,40)] lg:right-12">
           <motion.div
             className="absolute left-0 top-0 z-10 w-full bg-white"
@@ -85,6 +84,7 @@ export const ImageRevealScroll = () => {
           />
         </div>
 
+        {/* Images */}
         {data.map((item, index) => (
           <motion.div
             key={index}
@@ -92,7 +92,13 @@ export const ImageRevealScroll = () => {
             style={{ scale: getImageScale(index), ...getImageStyle(index) }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
+            <Image
+              src={item.image}
+              alt={item.title}
+              fill
+              style={{ objectFit: "cover" }}
+              priority={index === 0} // erstes Bild schnell laden
+            />
           </motion.div>
         ))}
       </section>

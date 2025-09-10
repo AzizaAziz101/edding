@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Lenis from 'lenis';
-
+import Lenis from "lenis";
 
 export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
   const lenisRef = useRef<Lenis | null>(null);
@@ -11,7 +10,7 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
     lenisRef.current = new Lenis({
       duration: 1.2,
       easing: (t) => t,
-      smooth: true,
+      lerp: 0.1, // ersetzt smooth
     });
 
     const raf = (time: number) => {
