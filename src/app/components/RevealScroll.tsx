@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 const data = [
-  { title: "Digital Architecture", image: "/images/x.com/20.jpeg" },
-  { title: "Horizon Beyond", image: "/images/x.com/21.jpeg" },
-  { title: "Sound Wave Circuit", image: "/images/x.com/31.png" },
-  { title: "Light Writer", image: "/images/x.com/13.jpeg" },
-  { title: "Star Explorer", image: "/images/lummi/img8.png" },
+  { title: "Digital Architecture", image: "/images/x.com/2234.jpg" },
+  { title: "Horizon Beyond", image: "/images/x.com/2234.jpg" },
+  { title: "Sound Wave Circuit", image: "/images/x.com/2234.jpg" },
+  { title: "Light Writer", image: "/images/x.com/2234.jpg" },
+  { title: "Star Explorer", image: "/images/x.com/2234.jpg" },
 ];
 
 export const ImageRevealScroll = () => {
